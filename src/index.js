@@ -111,33 +111,6 @@ function colorRange() {
                 return
             }
         }
-        color.push(['', percent])
-
-        // 按照起点排序,找到percent在哪两个之间，如果在第一个或者最后一个的位置，返回第一个或最后一个的色值
-        color.sort(function (a, b) {
-            return a[1] - b[1]
-        })
-
-
-        color.map((item, index) => {
-            if (item[1] == percent) {
-                currentIndex = index
-            }
-        })
-        // 返回第一个的值
-        if (currentIndex == 0) {
-            console.log('返回第一个的值')
-            return
-        }
-        // 最后一个
-        if (currentIndex == color.length - 1) {
-            console.log('返回最后一个的值')
-            return
-        }
-
-        // 开始计算
-
-        console.log(color)
 
     }
 
@@ -147,18 +120,42 @@ function colorRange() {
         let temp = []
         for (let i = 0; i < color.length; i++) {
             if (regColorType(color[i]).length) {
-                temp.push(color[i])
-                temp.push(step)
-                temp.push(hexToRgb(color[i]).slice(4, -1).split(','))
+                temp.push([color[i], step, hexToRgb(color[i]).slice(4, -1).split(',')])
             } else {
                 console.log('参数格式不正确')
                 return
             }
             step += (100 / (color.length - 1))
         }
-        console.log(temp)
-
+        color = temp
     }
+
+    color.push(['', percent, ''])
+
+    // 按照起点排序,找到percent在哪两个之间，如果在第一个或者最后一个的位置，返回第一个或最后一个的色值
+    color.sort(function (a, b) {
+        return a[1] - b[1]
+    })
+
+    color.map((item, index) => {
+        if (item[1] == percent) {
+            currentIndex = index
+        }
+    })
+    // 返回第一个的值
+    if (currentIndex == 0) {
+        console.log('返回第一个的值')
+        return
+    }
+    // 最后一个
+    if (currentIndex == color.length - 1) {
+        console.log('返回最后一个的值')
+        return
+    }
+
+    // 开始计算
+
+    console.log(color)
 
 
 
