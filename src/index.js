@@ -94,7 +94,6 @@ function colorRange() {
 
     function hexToRgb(hex) {
         let str = "rgb(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + ")";
-        console.log(str)
         return str
     }
 
@@ -107,7 +106,6 @@ function colorRange() {
         for (let i = 0; i < color.length; i++) {
             if (regColorType(color[i]).length && getArgumentType(color[i][1]) == 'number') {
                 color[i].push(regColorType(color[i]))
-                console.log(66)
             } else {
                 console.log('参数格式不正确')
                 return
@@ -139,12 +137,26 @@ function colorRange() {
 
         // 开始计算
 
-        console.log(currentIndex)
+        console.log(color)
 
     }
 
     if (argumentsType == 'string') {
         // 校验是不是色值
+        let step = 0;
+        let temp = []
+        for (let i = 0; i < color.length; i++) {
+            if (regColorType(color[i]).length) {
+                temp.push(color[i])
+                temp.push(step)
+                temp.push(hexToRgb(color[i]).slice(4, -1).split(','))
+            } else {
+                console.log('参数格式不正确')
+                return
+            }
+            step += (100 / (color.length - 1))
+        }
+        console.log(temp)
 
     }
 
