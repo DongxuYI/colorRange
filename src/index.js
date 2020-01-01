@@ -97,6 +97,22 @@ function colorRange() {
         return str
     }
 
+    function rbgToHex(r, g, b) {
+        return ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0');
+    }
+
+    function getReturnColor(returnType, rgb) {
+        returnType.toUpperCase()
+        switch (returnType) {
+            case 'hex':
+                return rbgToHex(...rgb)
+            case 'RGB':
+                return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
+            case 'RGBA':
+                return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${rgb[3]})`
+        }
+    }
+
 
     // 找到需要的数在数组的位置
     console.log(argumentsType)
@@ -144,11 +160,14 @@ function colorRange() {
     })
     // 返回第一个的值
     if (currentIndex == 0) {
+        getReturnColor(type, color[0][2])
         console.log('返回第一个的值')
+
         return
     }
     // 最后一个
     if (currentIndex == color.length - 1) {
+        getReturnColor(type, color[color.length - 1][2])
         console.log('返回最后一个的值')
         return
     }
@@ -164,4 +183,5 @@ function colorRange() {
 
 
 }
+
 module.exports = colorRange;
