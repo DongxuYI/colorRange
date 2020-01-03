@@ -1,6 +1,6 @@
 {
   "name": "color-range",
-  "version": "0.0.1-beta",
+  "version": "1.0.0",
   "description": "Pick colors in any range",
   "main": "./src/index.js",
   "scripts": {

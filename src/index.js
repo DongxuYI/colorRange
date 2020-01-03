@@ -11,8 +11,8 @@ function colorRange() {
     // 校验百分比
     let percent = arguments[0];
     var regPos = /^\d+(\.\d+)?$/; //非负浮点数
-    if (!regPos.test(percent)) {
-        console.log('第一个参数不是数字');
+    if (!regPos.test(percent) || percent >= 0) {
+        console.log('第一个参数不是数字或者小于0');
         return
     }
 
@@ -25,7 +25,8 @@ function colorRange() {
     }
 
 
-    let color = Array.prototype.slice.call(arguments, 2);;
+    let color = Array.prototype.slice.call(arguments, 2);
+    let result;
 
     // 这里只要数组或者字符串
     function getArgumentType(a) {
@@ -102,25 +103,24 @@ function colorRange() {
     }
 
     function getReturnColor(returnType, rgb) {
-        returnType.toUpperCase()
-        switch (returnType) {
-            case 'hex':
+        console.log(rgb)
+        switch (returnType.toUpperCase()) {
+            case 'HEX':
                 return rbgToHex(...rgb)
             case 'RGB':
                 return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
             case 'RGBA':
-                return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${rgb[3]})`
+                return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${rgb[3] || 1})`
         }
     }
 
 
     // 找到需要的数在数组的位置
-    console.log(argumentsType)
     let currentIndex = 0;
     if (argumentsType == 'array') {
         // 校验数组第一项是不是色值,第二项是不是数组
         for (let i = 0; i < color.length; i++) {
-            if (regColorType(color[i]).length && getArgumentType(color[i][1]) == 'number') {
+            if (regColorType(color[i]).length && getArgumentType(color[i][1]) == 'number' && color[i].length == 2) {
                 color[i].push(regColorType(color[i]))
             } else {
                 console.log('参数格式不正确')
@@ -136,7 +136,7 @@ function colorRange() {
         let temp = []
         for (let i = 0; i < color.length; i++) {
             if (regColorType(color[i]).length) {
-                temp.push([color[i], step, hexToRgb(color[i]).slice(4, -1).split(',')])
+                temp.push([color[i], step, regColorType(color[i])])
             } else {
                 console.log('参数格式不正确')
                 return
@@ -160,23 +160,48 @@ function colorRange() {
     })
     // 返回第一个的值
     if (currentIndex == 0) {
-        getReturnColor(type, color[0][2])
-        console.log('返回第一个的值')
+        // 返回第一个的值
+        result = getReturnColor(type, color[1][2])
 
-        return
+        return result
     }
     // 最后一个
     if (currentIndex == color.length - 1) {
-        getReturnColor(type, color[color.length - 1][2])
-        console.log('返回最后一个的值')
-        return
+        result = getReturnColor(type, color[color.length - 2][2])
+        // 返回最后一个的值
+        console.log(result)
+        return result
     }
 
     // 开始计算
 
-    console.log(color)
+    let tempRes = compute(percent, color[currentIndex - 1], color[currentIndex + 1])
+
+    result = getReturnColor(type, tempRes)
+    return result
+
+    function compute(percent, c1, c2) {
+        /**
+         * percent: 参数
+         * c1: currentIndex前一位，list
+         * c2: currentIndex后一位，list
+         */
+        let newPercent = (percent - c1[1]) / (c2[1] - c1[1]) * 100
 
 
+        let range0 = Number(c1[2][0]) > Number(c2[2][0]) ? Number(c1[2][0]) - Math.round(Math.abs(c1[2][0] - c2[2][0]) * newPercent / 100) : Number(c1[2][0]) + Math.round(Math.abs(c1[2][0] - c2[2][0]) * newPercent / 100)
+        let range1 = Number(c1[2][1]) > Number(c2[2][1]) ? Number(c1[2][1]) - Math.round(Math.abs(c1[2][1] - c2[2][1]) * newPercent / 100) : Number(c1[2][1]) + Math.round(Math.abs(c1[2][1] - c2[2][1]) * newPercent / 100)
+        let range2 = Number(c1[2][2]) > Number(c2[2][2]) ? Number(c1[2][2]) - Math.round(Math.abs(c1[2][2] - c2[2][2]) * newPercent / 100) : Number(c1[2][2]) + Math.round(Math.abs(c1[2][2] - c2[2][2]) * newPercent / 100)
+
+        // 如果有透明度的变化
+        let opacity = 1;
+        if (c1[2][3]) {
+            opacity = Number(c1[2][3]) > Number(c2[2][3]) ? (Number(c1[2][3]) - (Math.abs(c1[2][3] - c2[2][3]) * newPercent / 100)).toFixed(2) : (Number(c1[2][3]) + (Math.abs(c1[2][3] - c2[2][3]) * newPercent / 100)).toFixed(2)
+
+            return [range0, range1, range2, Number(opacity)]
+        }
+        return [range0, range1, range2]
+    }
 
 
 
