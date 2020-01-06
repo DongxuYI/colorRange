@@ -40,7 +40,6 @@ function colorRange() {
             case Object:
                 return 'object'
         }
-
     }
 
     // 先取第一个的格式，判断后面的是不是和第一个相等,要么都是数组要么都是字符串
@@ -54,7 +53,6 @@ function colorRange() {
 
     // 检验颜色格式，a可能是字符串或者数组
     function regColorType(a) {
-
         let colorStr = '', colorInner = []
         if (getArgumentType(a) == 'string') {
             colorStr = a
@@ -90,7 +88,6 @@ function colorRange() {
             console.log('HSLA开头的,目前不支持');
         }
         return colorInner
-
     }
 
     function hexToRgb(hex) {
@@ -127,7 +124,6 @@ function colorRange() {
                 return
             }
         }
-
     }
 
     if (argumentsType == 'string') {
@@ -162,7 +158,6 @@ function colorRange() {
     if (currentIndex == 0) {
         // 返回第一个的值
         result = getReturnColor(type, color[1][2])
-
         return result
     }
     // 最后一个
@@ -174,7 +169,6 @@ function colorRange() {
     }
 
     // 开始计算
-
     let tempRes = compute(percent, color[currentIndex - 1], color[currentIndex + 1])
 
     result = getReturnColor(type, tempRes)
@@ -187,7 +181,6 @@ function colorRange() {
          * c2: currentIndex后一位，list
          */
         let newPercent = (percent - c1[1]) / (c2[1] - c1[1]) * 100
-
 
         let range0 = Number(c1[2][0]) > Number(c2[2][0]) ? Number(c1[2][0]) - Math.round(Math.abs(c1[2][0] - c2[2][0]) * newPercent / 100) : Number(c1[2][0]) + Math.round(Math.abs(c1[2][0] - c2[2][0]) * newPercent / 100)
         let range1 = Number(c1[2][1]) > Number(c2[2][1]) ? Number(c1[2][1]) - Math.round(Math.abs(c1[2][1] - c2[2][1]) * newPercent / 100) : Number(c1[2][1]) + Math.round(Math.abs(c1[2][1] - c2[2][1]) * newPercent / 100)
@@ -202,11 +195,5 @@ function colorRange() {
         }
         return [range0, range1, range2]
     }
-
-
-
-
-
 }
-
 module.exports = colorRange;
