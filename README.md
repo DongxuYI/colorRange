@@ -5,8 +5,16 @@
 目前只支持线性渐变色值。
 
 用法：
+<<<<<<< HEAD
 ```
+=======
+
+```
+
+>>>>>>> 8a1c45d4265ab569ec6c1bf0154bce1d7488e5c0
 npm install color-range -S
+```
+
 ```
 
 或者
@@ -24,8 +32,7 @@ import colorRange from 'color-range'
 
 colorRange 接收多个参数，最少需要四个
 
-![Image text](https://formtrain.com/git_color_range/pic1.png)
-<br/>
+![Image text](https://raw.githubusercontent.com/DongxuYI/img_folder/master/pic1.png)
 如图所示：
 
 一个线段由三个颜色变化
