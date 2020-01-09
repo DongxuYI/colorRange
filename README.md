@@ -52,3 +52,5 @@ colorRange 接收多个参数，最少需要四个
 
 例如colorRange(10, "HEX", ["#CCCCCC", 0], ["#DDDDDD", 40], ["#EEEEEE", 100])
 起点是#CCCCCC，到40%变换成#DDDDDD，到最后的#EEEEEE，返回值是#d0d0d0
+
+如果有疑问或者bug，可以提issues或者私信我
