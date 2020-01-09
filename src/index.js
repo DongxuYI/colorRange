@@ -11,7 +11,7 @@ function colorRange() {
     // 校验百分比
     let percent = arguments[0];
     var regPos = /^\d+(\.\d+)?$/; //非负浮点数
-    if (!regPos.test(percent) || percent >= 0) {
+    if (!regPos.test(percent) || percent < 0) {
         console.log('第一个参数不是数字或者小于0');
         return
     }
@@ -96,7 +96,7 @@ function colorRange() {
     }
 
     function rbgToHex(r, g, b) {
-        return ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0');
+        return '#' + ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0');
     }
 
     function getReturnColor(returnType, rgb) {
