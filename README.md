@@ -6,7 +6,11 @@
 
 用法：
 
+```
+
 npm install color-range -S
+
+```
 
 或者
 
