@@ -19,7 +19,7 @@ import colorRange from 'color-range'
 
 colorRange 接收多个参数，最少需要四个
 
-![Image text](https://formtrain.com/git_color_range/pic1.png)
+![Image text](https://raw.githubusercontent.com/DongxuYI/img_folder/master/pic1.png)
 如图所示：
 
 一个线段由三个颜色变化
